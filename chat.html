@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Interface</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top right, #0a2a4d, #4a90e2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .chat-container {
+      width: 80%;
+      max-width: 1000px;
+      height: 90vh;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .header {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: flex-end;
+      background-color: rgba(0,0,0,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .mute-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .input-area {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      background-color: rgba(0,0,0,0.2);
+    }
+
+    .upload-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    .upload-btn:hover {
+      color: #ccc;
+    }
+
+    .text-input {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      padding: 8px;
+      color: #fff;
+      resize: none;
+      font-size: 14px;
+      outline: none;
+      line-height: 1.4;
+    }
+
+    .text-input::placeholder {
+      color: #ccc;
+    }
+
+    .hidden-upload {
+      display: none;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      background-color: rgba(255,255,255,0.2);
+      padding: 8px 12px;
+      border-radius: 8px;
+      word-wrap: break-word;
+    }
+
+    .message a {
+      color: #aeefff;
+      text-decoration: underline;
+      word-break: break-word;
+    }
+
+    .preview-card {
+      margin-top: 6px;
+      background-color: rgba(0,0,0,0.3);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="header">
+      <button class="mute-btn" id="muteBtn">🔔 Mute</button>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <button class="upload-btn" onclick="document.getElementById('fileUpload').click()">+</button>
+      <input type="file" id="fileUpload" class="hidden-upload" multiple accept="image/*,video/*" onchange="handleUpload(event)" />
+      <textarea id="textInput" class="text-input" placeholder="Send a message" rows="1"></textarea>
+    </div>
+  </div>
+
+<script>
+  const textInput = document.getElementById('textInput');
+  const messages = document.getElementById('messages');
+  const muteBtn = document.getElementById('muteBtn');
+  let notificationsMuted = false;
+
+  async function loadMessages() {
+    const res = await fetch('/.netlify/functions/getMessages');
+    const data = await res.json();
+    messages.innerHTML = '';
+    data.forEach(msg => addMessage(msg.content));
+  }
+
+  async function sendMessage(content) {
+    await fetch('/.netlify/functions/postMessage', {
+      method: 'POST',
+      body: JSON.stringify({ content }),
+    });
+    loadMessages();
+  }
+
+  textInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const text = textInput.value.trim();
+      if (text) {
+        sendMessage(text);
+        textInput.value = '';
+      }
+    }
+  });
+
+  muteBtn.addEventListener('click', () => {
+    notificationsMuted = !notificationsMuted;
+    muteBtn.textContent = notificationsMuted ? '🔕 Unmute' : '🔔 Mute';
+  });
+
+  function addMessage(content) {
+    const msg = document.createElement('div');
+    msg.className = 'message';
+
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = content.split(urlRegex);
+    parts.forEach(part => {
+      if (urlRegex.test(part)) {
+        const link = document.createElement('a');
+        link.href = part;
+        link.target = '_blank';
+        link.textContent = part;
+        msg.appendChild(link);
+
+        const preview = document.createElement('div');
+        preview.className = 'preview-card';
+        preview.textContent = `Preview: ${new URL(part).hostname}`;
+        msg.appendChild(preview);
+      } else {
+        msg.appendChild(document.createTextNode(part));
+      }
+    });
+
+    messages.appendChild(msg);
+    messages.scrollTop = messages.scrollHeight;
+
+    if (!notificationsMuted) {
+      showNotification(content);
+    }
+  }
+
+  function showNotification(text) {
+    if (Notification.permission === 'granted') {
+      new Notification('New Message', { body: text });
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          new Notification('New Message', { body: text });
+        }
+      });
+    }
+  }
+
+  setInterval(loadMessages, 3000);
+  loadMessages();
+</script>
+</body>
+</html>

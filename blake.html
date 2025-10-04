@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="My Profile | Blake">
+  <meta property="og:description" content="View my info page.">
+  <meta property="og:image" content="https://i.postimg.cc/pVwQDbpc/Untitled-design-25.png">
+  <meta property="og:url" content="https://archangels.info/blake">
+  <meta name="theme-color" content="#050505">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/pVwQDbpc/Untitled-design-25.png">
+  <title>My Profile | Blake</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    #intro-overlay { transition: opacity 0.6s ease; }
+
+    .background-media {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: contrast(1.05) saturate(1.05);
+      pointer-events: none;
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-card {
+      text-align: center;
+      padding: 32px;
+      max-width: 900px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1.6s ease-out;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .social-icon {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background-color: currentColor;
+      mask: var(--mask-url) no-repeat center / contain;
+      -webkit-mask: var(--mask-url) no-repeat center / contain;
+      transition: transform 0.3s ease;
+    }
+
+    .social-link:hover .social-icon {
+      transform: scale(1.2);
+    }
+
+    .blake {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 14px;
+    }
+
+    .blake:hover { text-decoration: underline; }
+
+    #profile-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      padding: 20px 28px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 2s ease-out;
+    }
+
+    #avatar {
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.08), 0 6px 24px rgba(0,0,0,0.6);
+      display: block;
+    }
+
+    .badge {
+      height: 22px;
+      width: 28px;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      margin-bottom: 12px;
+    }
+
+    .nitro {
+      height: 29px;
+      width: 30px;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      margin-bottom: 12px;
+    }
+
+    #music-player {
+      margin-top: 40px;
+      animation: fadeIn 2.4s ease-out;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #progress-bar { transition: width 0.2s ease; }
+
+    .vol-control { display: inline-flex; align-items: center; gap: 8px; }
+
+    .mute-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .volume-slider {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 140px;
+      height: 28px;
+      border-radius: 999px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: linear-gradient(90deg, rgba(255,255,255,0.95) var(--v,100%), rgba(255,255,255,0.06) var(--v,100%));
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      transform-origin: right center;
+      transform: scaleX(0) translateX(6px);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .mute-wrapper:hover .volume-slider,
+    .mute-wrapper:focus-within .volume-slider {
+      opacity: 1;
+      transform: scaleX(1) translateX(0);
+    }
+
+    .volume-slider:focus { outline: none; }
+    .volume-slider::-webkit-slider-runnable-track { height:28px; border-radius:999px; background:transparent; }
+    .volume-slider::-moz-range-track         { height:28px; border-radius:999px; background:transparent; }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      margin-top: 5px;
+      transition: transform .08s ease;
+    }
+    .volume-slider:active::-webkit-slider-thumb { transform: scale(1.08); }
+    .volume-slider::-moz-range-thumb {
+      width:18px; height:18px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(0,0,0,0.5);
+      border: none;
+    }
+    .volume-slider::-moz-range-progress { background: transparent; }
+    .volume-slider::-ms-track { background: transparent; border-color: transparent; color: transparent; }
+    .volume-slider::-ms-fill-lower { background: transparent; }
+    .volume-slider::-ms-fill-upper { background: transparent; }
+    .volume-slider::-ms-thumb { border: none; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 28px; }
+      h3 { font-size: 16px; }
+      #profile-card { flex-direction: column; text-align: center; }
+    }
+
+    * {
+      cursor: url(https://r2.guns.lol/a4ebf83c-1c56-4a15-8b21-8f7b485cf72b.webp) 16 16, auto !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="intro-overlay" style="
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    transition: opacity 0.6s ease;
+    cursor: pointer;
+  ">
+    <h1 style="font-size:32px; margin-bottom:12px;">Click anywhere to enter</h1>
+  </div>
+
+  <video class="background-media" autoplay muted loop playsinline>
+    <source src="https://r2.guns.lol/3296a96f-e425-4c2e-9f52-1227eb8ad134.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay">
+    <div class="profile-card">
+      <h1 id="display-name">Hello, my name is Blake.</h1>
+      <h3 id="description">
+        I'm a tester for CL Studios on Roblox, create affordable Discord bots, and I'm a reliable staff member with server management experience.<br><br>
+        If you have any questions or want to collaborate, feel free to reach out. You can contact me via DM, my website or join my server, all are below.
+      </h3>
+
+      <div id="profile-card">
+        <div style="position:relative; width:100px; height:100px;">
+          <div style="width:100%; height:100%; overflow:hidden; border-radius:50%;">
+            <img id="avatar" src="https://i.postimg.cc/Y0C2Ygrw/Untitled-design.gif" alt="avatar" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div style="
+            position: absolute;
+            bottom: 4px; right: 3px;
+            width: 22px; height: 22px;
+            background: #ED4245;
+            border: 2px solid #000;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #2f3136, 0 0 6px #ED4245;
+            display: flex;
+            align-items: center;
+            justify-content: center;">
+            <div style="width:14px; height:4px; background:#fff; border-radius:2px;"></div>
+          </div>
+        </div>
+
+        <div style="text-align:left; flex:1;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <a class="blake" href="https://discord.com/users/1362553254117904496" target="_blank">blake0_o</a>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <img class="nitro" src="https://i.postimg.cc/SQMgb5k9/2502-nitro-silver-nodot-background.png" alt="Nitro">
+              <img class="badge" src="https://i.postimg.cc/sgwcJC4G/brilliance.png" alt="Verified">
+              <img class="badge" src="https://i.postimg.cc/9XZYn7YS/7011-active-developer-badge.png" alt="Developer">
+              <img class="badge" src="https://i.postimg.cc/3RZkQYfK/Untitled-design-22.png" alt="Gem">
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px;">
+            <a class="social-link" href="https://open.spotify.com/user/31r4d2hp2xf74cuv7xwzcu5uzsqq" target="_blank" style="color:#1DB954;">
+              <span class="social-icon" style="--mask-url: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg');"></span>
+            </a>
+            <a class="social-link" href="https://github.com/Blake0v2" target="_blank" style="color:#fff;">
+              <span class="social-icon" style="--mask-url: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg');"></span>
+            </a>
+            <a class="social-link" href="https://discord.com/users/1362553254117904496" target="_blank" style="color:#5865F2;">
+              <span class="social-icon" style="--mask-url: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg');"></span>
+            </a>
+            <a class="social-link" href="/login" target="_blank" style="color:#e4bf67;">
+              <span class="social-icon" style="--mask-url: url('https://i.postimg.cc/Tw0hyH3f/e4bf67-5.png');"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="music-player">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <img id="track-cover"
+               src="https://i.scdn.co/image/ab67616d0000b273621cdf5cb47a430d2642fc81"
+               alt="cover"
+               style="width:64px; height:64px; border-radius:8px; object-fit:cover;">
+          <div style="flex:1;">
+            <div id="track-title" style="font-weight:500">
+              Where have you been (Orchestra)
+            </div>
+            <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:6px; margin-top:8px; position:relative;">
+              <div id="progress-bar"
+                   style="height:6px; background:#fff; width:0%; border-radius:6px;">
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button id="play-pause"
+                    style="background:transparent; border:1px solid rgba(255,255,255,0.12); color:#fff; padding:8px 10px; border-radius:8px;">
+              ►
+            </button>
+            <button id="skip-track"
+                    style="background:transparent; border:1px solid rgba(255,255,255,0.12); color:#fff; padding:8px 10px; border-radius:8px;">
+              ⏭
+            </button>
+            <div class="vol-control">
+              <div class="mute-wrapper">
+                <button id="mute-toggle"
+                        title="Mute / Unmute"
+                        style="background:transparent; border:1px solid rgba(255,255,255,0.12); color:#fff; padding:8px 10px; border-radius:8px;">
+                  🔊
+                </button>
+                <input id="volume-slider"
+                       class="volume-slider"
+                       type="range"
+                       min="0"
+                       max="1"
+                       step="0.01"
+                       value="1"
+                       aria-label="Volume">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <audio id="bg-audio" preload="auto" loop></audio>
+
+  <script>
+    const audio       = document.getElementById('bg-audio');
+    const playBtn     = document.getElementById('play-pause');
+    const skipBtn     = document.getElementById('skip-track');
+    const muteBtn     = document.getElementById('mute-toggle');
+    const volumeSlider= document.getElementById('volume-slider');
+    const trackCover  = document.getElementById('track-cover');
+    const trackTitle  = document.getElementById('track-title');
+    const progress    = document.getElementById('progress-bar');
+
+    const tracks = [
+      {
+        src:   'https://r2.guns.lol/8b55dacb-c587-4c35-aa09-e889b486a1d0.mp3',
+        title: 'Where have you been (Orchestra)',
+        cover: 'https://i.scdn.co/image/ab67616d0000b273621cdf5cb47a430d2642fc81'
+      },
+      {
+        src:   'https://r2.guns.lol/d1dbbf42-fe47-4ea6-bad7-ec8474dd076f.mp3',
+        title: 'algorithm',
+        cover: 'https://i.scdn.co/image/ab67616d0000b273859b4a4ae0504c7e18a6a97f'
+      },
+      {
+        src:   'https://r2.guns.lol/094e7384-798b-4139-89db-524f5cccd1ea.mp3',
+        title: 'Isekai',
+        cover: 'https://i.scdn.co/image/ab67616d0000b2733407073b2e5be339cc6fb657'
+      }
+    ];
+
+    let currentTrack = 0;
+    let isPlaying    = false;
+    const VOLUME_KEY = 'blake_bg_volume';
+    const MUTE_KEY   = 'blake_bg_muted';
+
+    function setVolume(v) {
+      audio.volume = v;
+      localStorage.setItem(VOLUME_KEY, v);
+      document.documentElement.style.setProperty('--v', Math.round(v * 100) + '%');
+      if (v === 0) {
+        audio.muted = true;
+        muteBtn.textContent = '🔇';
+        localStorage.setItem(MUTE_KEY, 'true');
+      } else {
+        audio.muted = false;
+        muteBtn.textContent = '🔊';
+        localStorage.setItem(MUTE_KEY, 'false');
+      }
+    }
+
+    function restoreSettings() {
+      let savedV = localStorage.getItem(VOLUME_KEY);
+      let volumeToSet;
+      if (savedV === null || isNaN(parseFloat(savedV))) {
+        volumeToSet = 0.5; // default to 50%
+        volumeSlider.value = 0.5;
+      } else {
+        volumeToSet = parseFloat(savedV);
+        volumeSlider.value = volumeToSet;
+      }
+      setVolume(volumeToSet);
+      const savedM = localStorage.getItem(MUTE_KEY);
+      if (savedM === 'true') {
+        audio.muted = true;
+        muteBtn.textContent = '🔇';
+      }
+    }
+
+    function loadTrack(index) {
+      currentTrack = index;
+      const { src, title, cover } = tracks[index];
+      audio.src        = src;
+      trackTitle.textContent = title;
+      trackCover.src   = cover;
+      audio.loop       = true;
+      audio.play().catch(() => {});
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) audio.pause();
+      else           audio.play();
+    });
+
+    skipBtn.addEventListener('click', () => {
+      const next = (currentTrack + 1) % tracks.length;
+      loadTrack(next);
+    });
+
+    muteBtn.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      localStorage.setItem(MUTE_KEY, audio.muted);
+      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+      if (!audio.muted) setVolume(audio.volume);
+    });
+
+    volumeSlider.addEventListener('input', e => setVolume(parseFloat(e.target.value)));
+
+    audio.addEventListener('play', () => {
+      isPlaying = true;
+      playBtn.textContent = '❚❚';
+    });
+
+    audio.addEventListener('pause', () => {
+      isPlaying = false;
+      playBtn.textContent = '►';
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!isNaN(audio.duration)) {
+        progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      restoreSettings();
+      loadTrack(0);
+
+      document.addEventListener('click',  () => audio.play().catch(() => {}), { once: true });
+      document.addEventListener('keydown',() => audio.play().catch(() => {}), { once: true });
+
+      const intro = document.getElementById('intro-overlay');
+      intro.addEventListener('click', () => {
+        audio.play().catch(() => {});
+        intro.style.opacity = '0';
+        intro.style.pointerEvents = 'none';
+        setTimeout(() => intro.style.display = 'none', 600);
+      });
+    });
+  </script>
+</body>
+</html>

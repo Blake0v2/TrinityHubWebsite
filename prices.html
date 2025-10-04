@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta property="og:title" content="The Holy Trinity - Commands">
+  <meta property="og:description" content="View our Discord bot commands page.">
+  <meta property="og:image" content="https://i.postimg.cc/28DMs10N/Untitled-design-63.png">
+  <meta property="og:url" content="https://archangels.info/commands">
+  <meta name="theme-color" content="#e4bf67">
+
+  <title>The Holy Trinity - Commands</title>
+  <link rel="website icon" type="png" href="https://i.postimg.cc/28DMs10N/Untitled-design-63.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img class="navbar-logo" src="https://i.postimg.cc/28DMs10N/Untitled-design-63.png" alt="Bot Icon">
+      <span class="navbar-title" href="/dashboard">The Holy Trinity</span>
+      <span class="navbar-menu">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/commands">Commands</a>
+        <a href="/prices" class="active">Pricing</a>
+        <a href="/support">Support</a>
+      </span>
+    </div>
+    <div class="navbar-right">
+      <a class="discord-btn" href="https://discord.gg/VpcM9yZrAP"><i class="fab fa-discord"></i> Discord</a>
+      <a class="logout-btn" href="/" onclick="logout(true)"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </nav>
+
+  <div class="pricing-section">
+    <div class="pricing-card basic">
+      <div class="card-top">
+        <i class="fas fa-star icon"></i>
+        <div class="card-header">Basic</div>
+        <div class="card-summary">Activity Check, Prefix Commands, Welcome Message</div>
+      </div>
+      <div class="card-details">
+        <p>Perfect for small communities. Includes basic bot functionality like activity monitoring, prefix-based commands, and a welcome message system.</p>
+        <a href="/basic-details" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <div class="pricing-card standard">
+      <div class="card-top">
+        <i class="fas fa-shield-alt icon"></i>
+        <div class="card-header">Standard</div>
+        <div class="card-summary">Game/Gamble, Defense System, Updates, 24/7 Support</div>
+      </div>
+      <div class="card-details">
+        <p>Ideal for active servers. Adds game/gamble commands, a defense system, in-game update messages, and full-time support.</p>
+        <a href="/standard-details" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <div class="pricing-card premium">
+      <div class="card-top">
+        <i class="fas fa-crown icon"></i>
+        <div class="card-header">Premium</div>
+        <div class="card-summary">Tickets, Custom Commands, Full Customization, 24/7 Support</div>
+      </div>
+      <div class="card-details">
+        <p>For large-scale or branded communities. Unlock ticket systems, custom commands, full UI customization, and priority support.</p>
+        <a href="/premium-details" class="card-btn">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+	<footer class="custom-footer">
+		<div class="footer-left">
+			<div class="site-title">The Holy Trinity</div>
+		</div>
+		<div class="footer-center">
+			<a href="/terms">Terms</a> |
+			<a href="/support">Support</a> |
+			<a href="/privacy-policy">Privacy Policy</a>
+			<div style="font-size:13px;margin-top:6px;color:rgba(255,255,255,0.8)">&copy; 2025 The Holy Trinity. All rights reserved</div>
+		</div>
+		<div class="footer-right">
+			<a class="staff-btn" href="/staff">Staff Page</a>
+		</div>
+	</footer>
+<style>
+  :root {
+    --bg: #242424;
+    --panel: #c99a2a;
+    --panel-dark: #d6b24a;
+    --muted: #f3e0b0;
+    --accent: #5b59f0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #222;
+    min-height: 100vh;
+    color: white;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(56, 58, 58, 0.95);
+    border-radius: 50px;
+    margin: 24px auto 0 auto;
+    padding: 0 40px;
+    height: 90px;
+    max-width: 1100px;
+    box-shadow: 0 4px 24px rgba(31,38,135,0.15);
+    border: 2px solid #e4bf67;
+  }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-logo {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-right: 18px;
+    margin-left: -28px;
+  }
+
+  .navbar-title {
+    font-size: 1.6em;
+    color: #e4bf67;
+    font-weight: bold;
+    margin-right: 40px;
+    text-shadow: 0 0 8px #e4bf67, 0 0 2px #fff;
+  }
+
+  .navbar-menu a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .navbar-menu a:hover {
+    color: #e4bf67;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .navbar-menu a.active {
+    color: #e4bf67;
+  }
+
+  .discord-btn {
+    background: #5865f2;
+    color: #fff;
+    border-radius: 22px;
+    padding: 10px 28px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+  }
+
+  .discord-btn:hover {
+    background: #e4bf67;
+    color: #383a3a;
+  }
+
+  .logout-btn {
+    background: #ff0000;
+    color: #fff;
+    border-radius: 22px;
+    padding: 10px 18px;
+    font-size: 1.3em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .logout-btn:hover {
+    background: #e4bf67;
+    color: #383a3a;
+  }
+
+  .pricing-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    margin: 100px auto;
+    max-width: 700px;
+  }
+
+  .pricing-card {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+    cursor: pointer;
+    color: white;
+    background-clip: padding-box;
+  }
+
+  .basic {
+    background: linear-gradient(180deg, #000000, #3432c7);
+  }
+
+  .standard {
+    background: linear-gradient(180deg, #731919, #e52b2b);
+  }
+
+  .premium {
+    background: linear-gradient(180deg, #6d7486, #0a0d13);
+  }
+
+  .card-top {
+    padding: 32px;
+    text-align: center;
+    background: transparent;
+    z-index: 2;
+    position: relative;
+  }
+
+  .card-header {
+    font-size: 2.4em;
+    font-weight: 900;
+    margin-bottom: 16px;
+    text-shadow: 0 0 8px rgba(255,255,255,0.25);
+  }
+
+  .card-summary {
+    font-size: 1.2em;
+    color: #f0f0f0;
+    margin-bottom: 8px;
+  }
+
+  .icon {
+    font-size: 2.6em;
+    color: #e4bf67;
+    margin-bottom: 16px;
+  }
+
+  .card-details {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 32px;
+    transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+    background: transparent;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    z-index: 1;
+  }
+
+  .pricing-card:hover .card-details {
+    max-height: 300px;
+    opacity: 1;
+    padding: 24px 32px;
+  }
+
+  .card-btn {
+    display: block;
+    margin: 24px auto 10px;
+    padding: 12px 28px;
+    background: #e4bf67;
+    color: #222;
+    font-weight: bold;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .card-btn:hover {
+    background: #f5d77e;
+  }
+
+  footer.custom-footer {
+  background: #2f2f2f;
+  border-top: 1px solid rgba(0,0,0,0.25);
+  padding: 18px 28px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-top: 80px;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-left: 6px;
+  }
+
+  .site-title {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--muted);
+    text-shadow:
+      0 8px 32px rgba(201,154,42,0.28),
+      0 0 18px rgba(201,154,42,0.45);
+    letter-spacing: 1px;
+  }
+
+  .footer-center {
+    color: var(--panel-dark);
+    text-align: center;
+    margin-left: -225px;
+  }
+
+  .footer-center a {
+    color: var(--panel-dark);
+    text-decoration: none;
+    margin: 0 6px;
+  }
+
+  .staff-btn {
+    background: var(--panel-dark);
+    color: #111;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    text-decoration: none;
+    display: inline-block;
+    justify-self: end;
+  }
+
+@media (max-width: 1024px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    border-radius: 30px;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .pricing-section {
+    margin: 60px auto;
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .card-header {
+    font-size: 2em;
+  }
+
+  .card-summary {
+    font-size: 1em;
+  }
+
+  .card-details {
+    font-size: 0.95em;
+  }
+
+  footer.custom-footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .footer-left,
+  .footer-right {
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .footer-center {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-logo {
+    width: 60px;
+    height: 60px;
+    margin-left: 0;
+  }
+
+  .navbar-title {
+    font-size: 1.4em;
+    margin-right: 0;
+  }
+
+  .navbar-menu a {
+    font-size: 1em;
+    margin: 0 10px;
+  }
+
+  .discord-btn,
+  .logout-btn {
+    font-size: 1em;
+    padding: 8px 16px;
+  }
+
+  .pricing-card {
+    min-height: 280px;
+  }
+
+  .card-header {
+    font-size: 1.6em;
+  }
+
+  .card-summary {
+    font-size: 0.95em;
+  }
+
+  .card-btn {
+    padding: 10px 20px;
+    font-size: 0.95em;
+  }
+
+  .site-title {
+    font-size: 28px;
+  }
+
+  .staff-btn {
+    padding: 10px 16px;
+    font-size: 0.95em;
+  }
+}
+</style>
+<script>
+const guildId = "1411132581583388765";
+const staffRoleIds = ["1411132582128783392", "1412143147081011272", "1411172173829378088", "1411132582111744015"];
+
+async function getUserRoles() {
+  let accessToken = localStorage.getItem("discord_access_token");
+
+  if (!accessToken) {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    accessToken = params.get("access_token");
+    if (accessToken) {
+      localStorage.setItem("discord_access_token", accessToken);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+
+  if (!accessToken) {
+    hideStaffCommands();
+    return;
+  }
+
+  try {
+    const memberRes = await fetch(`https://discord.com/api/users/@me/guilds/${guildId}/member`, {
+      headers: { "Authorization": `Bearer ${accessToken}` }
+    });
+
+    if (memberRes.ok) {
+      const member = await memberRes.json();
+      const isStaff = member.roles.some(roleId => staffRoleIds.includes(roleId));
+      isStaff ? showStaffCommands() : hideStaffCommands();
+    } else {
+      hideStaffCommands();
+    }
+  } catch (err) {
+    hideStaffCommands();
+  }
+}
+
+function logout(redirect = true) {
+  localStorage.removeItem("discord_access_token");
+  setGuestUser();
+  if (redirect) window.location.href = "/login";
+}
+</script>
+</body>
+</html>
