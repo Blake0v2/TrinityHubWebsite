@@ -1,0 +1,257 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta property="og:title" content="The Holy Trinity Website">
+	<meta property="og:description" content="Visit our website to access the dashboard and see your stats.">
+	<meta property="og:url" content="https://archangels.info/">
+	<meta property="og:image" content="https://i.postimg.cc/gJGCrhjg/Welcome-to-The-Holy-Trinity-Website-3.png">
+	<meta name="theme-color" content="#e4bf67">
+	<link rel="website icon" type="png" href="https://i.postimg.cc/28DMs10N/Untitled-design-63.png">
+	<title>The Holy Trinity</title>
+	<style>
+	:root {
+		--bg: #242424;
+		--panel: #c99a2a;
+		--panel-dark: #d6b24a;
+		--muted: #f3e0b0;
+		--accent: #5b59f0;
+	}
+
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		background: var(--bg);
+		font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		color: #fff;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	.wrap {
+		flex: 1;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 96px 20px 40px;
+		box-sizing: border-box;
+	}
+
+	.welcome-card {
+		background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.00) 100%), var(--panel);
+		border-radius: 12px;
+		padding: 96px 64px 120px;
+		box-shadow: 0 18px 0 rgba(0,0,0,0.28), 0 12px 48px rgba(0,0,0,0.55);
+		border: 12px solid var(--panel-dark);
+		text-align: center;
+		margin: 40px auto 64px;
+		max-width: 1100px;
+	}
+
+	.welcome-card h1 {
+		margin: 0 0 20px 0;
+		font-size: 48px;
+		color: #fff;
+		text-shadow: 0 8px 28px rgba(0,0,0,0.32), 0 0 20px rgba(255,255,255,0.06);
+		font-weight: 900;
+	}
+
+	.welcome-card p {
+		margin: 0 0 36px 0;
+		color: rgba(255,255,255,0.9);
+		font-size: 18px;
+	}
+
+	.auth-btn {
+		display: inline-block;
+		background: var(--accent);
+		color: #fff;
+		padding: 18px 36px;
+		border-radius: 14px;
+		font-size: 20px;
+		font-weight: 700;
+		border: none;
+		box-shadow: 0 10px 26px rgba(91,89,240,0.26), 0 4px 10px rgba(0,0,0,0.45);
+		text-decoration: none;
+	}
+
+	.auth-btn:active {
+		transform: translateY(1px);
+	}
+
+	footer.custom-footer {
+		position: relative;
+		bottom: 0;
+		width: 100%;
+		background: #2f2f2f;
+		border-top: 1px solid rgba(0,0,0,0.25);
+		padding: 18px 28px;
+		box-sizing: border-box;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.footer-left {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+		padding-left: 6px;
+	}
+
+	.site-title {
+		font-size: 40px;
+		font-weight: 800;
+		color: var(--muted);
+		text-shadow:
+		0 8px 32px rgba(201,154,42,0.28),
+		0 0 18px rgba(201,154,42,0.45);
+		letter-spacing: 1px;
+	}
+
+	.footer-center {
+		color: var(--panel-dark);
+		text-align: center;
+		margin-left: -225px;
+	}
+
+	.footer-center a {
+		color: var(--panel-dark);
+		text-decoration: none;
+		margin: 0 6px;
+	}
+
+	.staff-btn {
+		background: var(--panel-dark);
+		color: #111;
+		padding: 12px 20px;
+		border-radius: 12px;
+		font-weight: 700;
+		box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+		text-decoration: none;
+		display: inline-block;
+		justify-self: end;
+	}
+
+	/* Responsive layout */
+	@media (max-width: 1024px) {
+		.welcome-card {
+		padding: 64px 32px 80px;
+		margin: 20px 0 40px;
+		}
+
+		.welcome-card h1 {
+		font-size: 36px;
+		}
+
+		.welcome-card p {
+		font-size: 16px;
+		}
+
+		.auth-btn {
+		font-size: 18px;
+		padding: 14px 28px;
+		}
+
+		footer.custom-footer {
+		grid-template-columns: 1fr;
+		text-align: center;
+		padding: 24px 16px;
+		}
+
+		.footer-left,
+		.footer-right {
+		justify-content: center;
+		margin-bottom: 12px;
+		}
+
+		.footer-center {
+		margin-left: 0;
+		}
+
+		.site-title {
+		font-size: 28px;
+		}
+
+		.staff-btn {
+		padding: 10px 16px;
+		font-size: 0.95em;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.welcome-card {
+		padding: 48px 20px 64px;
+		}
+
+		.welcome-card h1 {
+		font-size: 28px;
+		}
+
+		.auth-btn {
+		font-size: 16px;
+		padding: 12px 24px;
+		}
+
+		.site-title {
+		font-size: 24px;
+		}
+	}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<main>
+			<section class="welcome-card">
+				<h1>Welcome to The Holy Trinity Website</h1>
+				<p>Please log in with your discord account to continue</p>
+				<a class="auth-btn" href="https://discord.com/oauth2/authorize?client_id=1423415221250293825&response_type=token&redirect_uri=https%3A%2F%2Farchangels.info&scope=identify+guilds.members.read">Authorize Discord</a>
+			</section>
+		</main>
+	</div>
+
+  	<footer class="custom-footer">
+		<div class="footer-left">
+			<div class="site-title">The Holy Trinity</div>
+		</div>
+		<div class="footer-center">
+			<a href="/terms">Terms</a> |
+			<a href="/support">Support</a> |
+			<a href="/privacy-policy">Privacy Policy</a>
+			<div style="font-size:13px;margin-top:6px;color:rgba(255,255,255,0.8)">&copy; 2025 The Holy Trinity. All rights reserved</div>
+		</div>
+		<div class="footer-right">
+			<a class="staff-btn" href="#">Staff Page</a>
+		</div>
+	</footer>
+
+	<script>
+		(function(){
+			try{
+				var key = 'discord_access_token';
+				var token = localStorage.getItem(key);
+				if(!token){
+					var h = window.location.hash.substring(1);
+					if(h){
+						var p = new URLSearchParams(h);
+						token = p.get('access_token');
+						if(token) localStorage.setItem(key, token);
+					}
+				}
+				if(token){
+					window.location.replace('dashboard.html');
+				}
+			}catch(e){}
+		})();
+	</script>
+</body>
+</html>
